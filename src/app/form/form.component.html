@@ -1,5 +1,15 @@
 <form action="submit" (ngSubmit)="onsubmit()">
-  <input type="text" name="Enter your email" id="uname" />
-  <input type="text" name="Enter your password" id="pword" />
+  <input
+    type="text"
+    name="Enter your email"
+    id="uname"
+    [formControl]="unamec"
+  />
+  <input
+    type="text"
+    name="Enter your password"
+    id="pword"
+    [formControl]="pwordc"
+  />
   <button type="submit">Submit</button>
 </form>

@@ -8,7 +8,6 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
-import { usr } from "./form"
 
 // import { AngularFireModule } from '@angular/fire/compat';
 // import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -29,9 +28,5 @@ import { usr } from "./form"
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  db: any = getDatabase();
-  usrs = this.db.collection("usrs");
-  user: usr = FormComponent.user;
-  query = this.usrs.where('email', '==', user.uname).where('password', '==', user.pword).get();
-}
+
+export class AppModule { }
