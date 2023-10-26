@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Firestore, getFirestore, where, collection } from '@angular/fire/firestore';
+import { Firestore, getFirestore, where, collection, query, getDocs } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
-import { query } from 'firebase/firestore';
+// import {  } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
 import { initializeApp } from '@angular/fire/app';
 
@@ -22,21 +22,34 @@ export class FormComponent {
   uname: string = "";
   pword: string = "";
   db: Firestore = getFirestore();
-  usrsRef: any;
+  usrsRef: any = collection(this.db, '/usrs');
+  usrQ: any;
+  snapshot: any;
+  usr: any;
   constructor(public firestore: Firestore){ }
 
-  onsubmit(){
+  async onsubmit(){
     this.uname = this.unamec.getRawValue();
     this.pword = this.pwordc.getRawValue();
-    // console.log(`Uname: ${this.uname}\nPword: ${this.pword}`);
+    console.log(`Uname: ${this.uname}\nPword: ${this.pword}`);
 
-    this.usrsRef = query(
-      collection(this.db, '/usrs'),
+    this.usrQ = query(
+      this.usrsRef,
       where('email', '==', this.uname),
       where('password', '==', this.pword)
     );
-    if(!this.usrsRef) alert("Yeah, no user by that name.");
-    else alert("It works! Yippee!");
+    this.snapshot = await getDocs(this.usrQ).then((snapshot) => {
+      if(snapshot.docs.length > 0){
+        snapshot.forEach((doc) => {
+          this.usr = doc.data();
+        })
+      } else {
+        this.usr = null;
+      }
+    });
+    
+    if(this.usr == null) alert("Yeah, no user by that name.");
+    else alert(`It works! Yippee! ${this.usr.email}`);
   }
 
 }
