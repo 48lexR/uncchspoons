@@ -8,6 +8,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
+import { RegisterComponent } from './register/register.component';
 
 // import { AngularFireModule } from '@angular/fire/compat';
 // import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -15,7 +16,8 @@ import { FormComponent } from './form/form.component';
 @NgModule({
   declarations: [
     AppComponent,
-    FormComponent
+    FormComponent,
+    RegisterComponent
     ],
   imports: [
     BrowserModule,

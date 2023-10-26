@@ -19,13 +19,18 @@ export class FormComponent {
   cheese = initializeApp(environment.firebase);
   unamec: FormControl = new FormControl('');
   pwordc: FormControl = new FormControl('');
+  namec: FormControl = new FormControl('');
+  unameMakec: FormControl = new FormControl("");
   uname: string = "";
   pword: string = "";
+  name: string = "";
+  unameMake: string = "";
   db: Firestore = getFirestore();
   usrsRef: any = collection(this.db, '/usrs');
   usrQ: any;
   snapshot: any;
   usr: any;
+  userID: any;
   constructor(public firestore: Firestore){ }
 
   async onsubmit(){
@@ -38,6 +43,7 @@ export class FormComponent {
       where('email', '==', this.uname),
       where('password', '==', this.pword)
     );
+
     this.snapshot = await getDocs(this.usrQ).then((snapshot) => {
       if(snapshot.docs.length > 0){
         snapshot.forEach((doc) => {
@@ -51,5 +57,6 @@ export class FormComponent {
     if(this.usr == null) alert("Yeah, no user by that name.");
     else alert(`It works! Yippee! ${this.usr.email}`);
   }
+
 
 }

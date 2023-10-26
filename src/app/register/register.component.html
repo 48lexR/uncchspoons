@@ -1,0 +1,17 @@
+<form action="submit" (ngSubmit)="submit()">
+  <input
+    type="text"
+    name="uname"
+    id="unamec"
+    placeholder="email"
+    [formControl]="unamec"
+  />
+  <input
+    type="text"
+    name="name"
+    id="name"
+    [formControl]="namec"
+    placeholder="Please fill this out if you're creating a new user."
+  />
+  <button type="submit">Register new user?</button>
+</form>
