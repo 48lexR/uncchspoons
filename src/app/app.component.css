@@ -1,0 +1,12 @@
+*{
+    margin: 0;
+  }
+  h1{
+    font-size: larger;
+    text-align: center;
+  }
+  span{
+    font-style:italic;
+    font-weight:100;
+    text-align: center;
+  }

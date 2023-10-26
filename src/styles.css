@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    background-color: black;
+    color:white;
+    width: auto;
+}
+html{
+    padding: clamp(0%, 5%, 30%);
+    margin: auto;
+    width:fit-content;
+    height: 100%;
+}
