@@ -54,7 +54,7 @@ export class FormComponent {
       }
     });
     
-    if(this.usr == null) alert("Yeah, no user by that name.");
+    if(this.usr === null) alert("Yeah, no user by that name.");
     else alert(`It works! Yippee! ${this.usr.email}`);
   }
 
