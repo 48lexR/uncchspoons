@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Injectable, Output } from '@angular/core';
-import { initializeApp } from '@angular/fire/app';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AppModule } from '../app.module';
 import { CollectionReference, Firestore, collection, doc, getDocs, getFirestore, or, query, setDoc, where } from '@angular/fire/firestore';
-import { environment } from 'src/environments/environment';
 import { EmailService } from '../email.service';
 
 @Component({
@@ -23,15 +20,12 @@ export class RegisterComponent {
     pword: "",
     ID: ""
   };
-  // db = getFirestore();
-  // usrsRef: CollectionReference = collection(this.db, "/usrs");
   db: Firestore = getFirestore();
   usrs: CollectionReference = collection(this.db, "/usrs");
 
   constructor(private emailer: EmailService) { }
 
   async submit(){
-  //   console.log(typeof(this.usrsRef));
     this.user.name = this.namec.getRawValue();
     this.user.uname = this.unamec.getRawValue();
     this.user.pword = (Math.random()*256).toString(16);
@@ -51,16 +45,16 @@ export class RegisterComponent {
 
     if(a){
       this.emailer.sendMessage(this.user);
-        await setDoc(doc(this.usrs, this.user.ID), JSON.parse(JSON.stringify({
-          email: this.user.uname,
-          pword: this.user.pword,
-          isAdmin: false,
-          kills: 0,
-          name: this.user.name,
-          target: null
-          })));
-      } else {
-        alert("Sorry, that email or user already exists.");
-      }
+      await setDoc(doc(this.usrs, this.user.ID), JSON.parse(JSON.stringify({
+        email: this.user.uname,
+        pword: this.user.pword,
+        isAdmin: false,
+        kills: 0,
+        name: this.user.name,
+        target: null
+      })));
+    } else {
+      alert("Sorry, that email or user already exists.");
+    }
   }
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Firestore, getFirestore, where, collection, query, getDocs } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
-// import {  } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
 import { initializeApp } from '@angular/fire/app';
 
@@ -29,8 +28,16 @@ export class FormComponent {
   usrsRef: any = collection(this.db, '/usrs');
   usrQ: any;
   snapshot: any;
-  usr: any;
+  usr: any = {
+    name : "",
+    email: "",
+    pass: "",
+    kills: 0,
+    isAdmin: false,
+    target: null
+  };
   userID: any;
+  loggedin: boolean = false;
   constructor(public firestore: Firestore){ }
 
   async onsubmit(){
@@ -55,7 +62,9 @@ export class FormComponent {
     });
     
     if(this.usr === null) alert("Yeah, no user by that name.");
-    else alert(`It works! Yippee! ${this.usr.email}`);
+    else {
+      this.loggedin = true;
+    };
   }
 
 

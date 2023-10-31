@@ -1,17 +1,24 @@
-<form action="submit" (ngSubmit)="onsubmit()">
-  <input
-    type="text"
-    name="Enter your email"
-    id="uname"
-    [formControl]="unamec"
-  />
-  <br />
-  <input
-    type="text"
-    name="Enter your password"
-    id="pword"
-    [formControl]="pwordc"
-  /><br />
+<div [style.display]="loggedin ? 'none' : 'grid'">
+  <form action="submit" (ngSubmit)="onsubmit()" style="padding: 1rem">
+    <input
+      type="text"
+      name="Enter your email"
+      id="uname"
+      [formControl]="unamec"
+    />
+    <br />
+    <input
+      type="text"
+      name="Enter your password"
+      id="pword"
+      [formControl]="pwordc"
+    /><br />
 
-  <button type="submit">Submit</button>
-</form>
+    <button type="submit">Submit</button>
+  </form>
+  <app-register style="padding: 1rem"></app-register>
+</div>
+<app-loggedin
+  [style.display]="loggedin ? 'block' : 'none'"
+  [user]="usr"
+></app-loggedin>

@@ -1,0 +1,4 @@
+div{
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+}
