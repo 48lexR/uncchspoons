@@ -1,42 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Injectable, Output } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
 import { FormControl } from '@angular/forms';
-import { CollectionReference, collection, doc, getFirestore, setDoc } from '@angular/fire/firestore';
+import { AppModule } from '../app.module';
+import { CollectionReference, Firestore, collection, doc, getFirestore, setDoc } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [EmailService]
 })
-export class RegisterComponent {
-  cheese = initializeApp(environment.firebase);
 
+export class RegisterComponent {
+  // cheese = initializeApp(environment.firebase);
   namec: FormControl = new FormControl("");
   unamec: FormControl = new FormControl("");
-  uname: string = "";
-  name: string = "";
-  pword: string = "";
-  userID: string = "";
-  db = getFirestore();
-  usrsRef: CollectionReference = collection(this.db, "/usrs");
+  user = {
+    name: "",
+    uname: "",
+    pword: "",
+    ID: ""
+  };
+  // db = getFirestore();
+  // usrsRef: CollectionReference = collection(this.db, "/usrs");
+  db: Firestore = getFirestore();
+  usrs: CollectionReference = collection(this.db, "/usrs");
 
+  constructor(private emailer: EmailService) { }
 
   async submit(){
-    console.log(typeof(this.usrsRef));
-    this.name = this.namec.getRawValue();
-    this.uname = this.unamec.getRawValue();
-    this.pword = (Math.random()*256).toString(16);
-    this.userID = (Math.random()*256).toString(16);
-    console.log("Here?");
-    await setDoc(doc(this.usrsRef, this.userID), JSON.parse(JSON.stringify({
-      email: this.uname,
-      password: this.pword,
+  //   console.log(typeof(this.usrsRef));
+    this.user.name = this.namec.getRawValue();
+    this.user.uname = this.unamec.getRawValue();
+    this.user.pword = (Math.random()*256).toString(16);
+    this.user.ID = (Math.random()*256).toString(16);
+
+    this.emailer.sendMessage(this.user);
+    await setDoc(doc(this.usrs, this.user.ID), JSON.parse(JSON.stringify({
+      email: this.user.uname,
+      pword: this.user.pword,
       isAdmin: false,
       kills: 0,
-      name: this.name,
+      name: this.user.name,
       target: null
     })));
-  }
-
+  };
+  
 }
