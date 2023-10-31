@@ -9,7 +9,7 @@ export class EmailService {
 
   sendMessage(body: any){
     console.log(body);
-    return this.req.post('http://uncchspoons.net:8000/email', JSON.parse(JSON.stringify(body)), {
+    return this.req.post('http://uncchspoons.net/email', JSON.parse(JSON.stringify(body)), {
       headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
