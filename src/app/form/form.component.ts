@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Query } from '@angular/core';
 import { Firestore, getFirestore, where, collection, query, getDocs } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { initializeApp } from '@angular/fire/app';
+import { CollectionReference } from 'firebase/firestore';
 
 export interface User{
   uname: string,
@@ -20,14 +21,13 @@ export class FormComponent {
   pwordc: FormControl = new FormControl('');
   namec: FormControl = new FormControl('');
   unameMakec: FormControl = new FormControl("");
-  uname: string = "";
-  pword: string = "";
-  name: string = "";
-  unameMake: string = "";
+  uname = "";
+  pword = "";
+  name = "";
+  unameMake = "";
   db: Firestore = getFirestore();
-  usrsRef: any = collection(this.db, '/usrs');
-  usrQ: any;
-  snapshot: any;
+  usrsRef: CollectionReference = collection(this.db, '/usrs');
+  
   usr: any = {
     name : "",
     email: "",
@@ -36,8 +36,8 @@ export class FormComponent {
     isAdmin: false,
     target: null
   };
-  userID: any;
-  loggedin: boolean = false;
+  userID = "";
+  loggedin = false;
   constructor(public firestore: Firestore){ }
 
   async onsubmit(){
@@ -45,13 +45,13 @@ export class FormComponent {
     this.pword = this.pwordc.getRawValue();
     console.log(`Uname: ${this.uname}\nPword: ${this.pword}`);
 
-    this.usrQ = query(
+    const usrQ = query(
       this.usrsRef,
       where('email', '==', this.uname),
       where('password', '==', this.pword)
     );
 
-    this.snapshot = await getDocs(this.usrQ).then((snapshot) => {
+    await getDocs(usrQ).then((snapshot) => {
       if(snapshot.docs.length > 0){
         snapshot.forEach((doc) => {
           this.usr = doc.data();
@@ -64,7 +64,7 @@ export class FormComponent {
     if(this.usr === null) alert("Yeah, no user by that name.");
     else {
       this.loggedin = true;
-    };
+    }
   }
 
 
