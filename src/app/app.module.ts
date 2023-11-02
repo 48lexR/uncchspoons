@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { EmailService } from './email.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoggedinComponent } from './loggedin/loggedin.component';
+import { InfoComponent } from './info/info.component';
 
 // import { AngularFireModule } from '@angular/fire/compat';
 // import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -21,7 +22,8 @@ import { LoggedinComponent } from './loggedin/loggedin.component';
     AppComponent,
     FormComponent,
     RegisterComponent,
-    LoggedinComponent
+    LoggedinComponent,
+    InfoComponent
     ],
   imports: [
     BrowserModule,

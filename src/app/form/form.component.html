@@ -1,10 +1,13 @@
-<div [style.display]="loggedin ? 'none' : 'grid'">
-  <form action="submit" (ngSubmit)="onsubmit()" style="padding: 1rem">
+<div [style.display]="loggedin ? 'none' : 'block'" class="login">
+  <p><strong>Log In</strong></p>
+  <br />
+  <form action="submit" (ngSubmit)="onsubmit()">
     <input
       type="text"
       name="Enter your email"
       id="uname"
       [formControl]="unamec"
+      placeholder="email"
     />
     <br />
     <input
@@ -12,13 +15,15 @@
       name="Enter your password"
       id="pword"
       [formControl]="pwordc"
-    /><br />
+      placeholder="password"
+    />
+    <br />
 
     <button type="submit">Submit</button>
   </form>
-  <app-register style="padding: 1rem"></app-register>
+  <app-register></app-register>
 </div>
 <app-loggedin
-  [style.display]="loggedin ? 'block' : 'none'"
+  [style.visibility]="loggedin ? 'visible' : 'hidden'"
   [user]="usr"
 ></app-loggedin>

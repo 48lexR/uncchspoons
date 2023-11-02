@@ -12,6 +12,7 @@ export class LoggedinComponent {
     pword: "",
     kills: 0,
     isAdmin: false,
-    ID: ""
+    ID: "",
+    target: null
   };
 }

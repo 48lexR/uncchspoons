@@ -1,4 +1,6 @@
-div{
-    grid-template-columns: auto auto;
-    grid-template-rows: auto;
+div.login{
+    float:left;
+    width: max-content;
+    margin: clamp(2%, 5%, 7%);
+    padding: 2.5%;
 }

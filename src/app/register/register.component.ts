@@ -18,7 +18,8 @@ export class RegisterComponent {
     name: "",
     uname: "",
     pword: "",
-    ID: ""
+    ID: "",
+    target: null
   };
   db: Firestore = getFirestore();
   usrs: CollectionReference = collection(this.db, "/usrs");
