@@ -67,20 +67,19 @@ export class FirestoreService {
   }
 
   async onSubmit(uname: string, pword: string): Promise<boolean> {
-    const usrQ = query(
-      collection(this.db, "/usrs"),
+
+    return await getDocs(query(
+      collection(this.db, "usrs"),
       where('email', '==', uname),
       where('password', '==', pword)
-    );
-
-    await getDocs(usrQ).then((snapshot) => {
-      if(snapshot.docs.length === 1){
+    ))
+    .then((snapshot) => {
+      if(snapshot.docs.length > 0){
         return true;
       } else {
         return false;
       }
     });
-    return false;
 
   }
 }
