@@ -74,7 +74,7 @@ export class FirestoreService {
     );
 
     await getDocs(usrQ).then((snapshot) => {
-      if(snapshot.docs.length === 0){
+      if(snapshot.docs.length === 1){
         return true;
       } else {
         return false;
