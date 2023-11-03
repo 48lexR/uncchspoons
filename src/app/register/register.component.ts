@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { CollectionReference, Firestore, collection, doc, getDocs, getFirestore, or, query, setDoc, where } from '@angular/fire/firestore';
-import { EmailService } from '../email.service';
+import { FirestoreService } from '../firestore.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [EmailService]
+  providers: [FirestoreService],
+
 })
 
 export class RegisterComponent {
-  // cheese = initializeApp(environment.firebase);
+
   namec: FormControl = new FormControl("");
   unamec: FormControl = new FormControl("");
   user = {
@@ -21,10 +21,8 @@ export class RegisterComponent {
     ID: "",
     target: null
   };
-  db: Firestore = getFirestore();
-  usrs: CollectionReference = collection(this.db, "/usrs");
 
-  constructor(private emailer: EmailService) { }
+  constructor(private fs: FirestoreService) { }
 
   async submit(){
     this.user.name = this.namec.getRawValue();
@@ -32,30 +30,37 @@ export class RegisterComponent {
     this.user.pword = (Math.random()*256).toString(16);
     this.user.ID = (Math.random()*256).toString(16);
 
-    //make sure this user DOESN'T already exist
-    let a = false;
-    await getDocs(query(
-      this.usrs,
-      or(where('name', '==', this.user.name),
-      where('email', '==', this.user.uname))
-    )).then((snapshot) => {
-      if(snapshot.docs.length === 0){
-        a = true;
-      }
-    });
+    let a = await this.fs.register(this.user);
 
-    if(a){
-      this.emailer.sendMessage(this.user);
-      await setDoc(doc(this.usrs, this.user.ID), JSON.parse(JSON.stringify({
-        email: this.user.uname,
-        pword: this.user.pword,
-        isAdmin: false,
-        kills: 0,
-        name: this.user.name,
-        target: null
-      })));
-    } else {
-      alert("Sorry, that email or user already exists.");
-    }
+    if(a) alert("An email has been sent to your account");
+    else alert("Sorry, that user already exists.")
   }
+    //make sure this user DOESN'T already exist
+
+
+  //   let a = false;
+  //   await getDocs(query(
+  //     this.usrs,
+  //     or(where('name', '==', this.user.name),
+  //     where('email', '==', this.user.uname))
+  //   )).then((snapshot) => {
+  //     if(snapshot.docs.length === 0){
+  //       a = true;
+  //     }
+  //   });
+
+  //   if(a){
+  //     this.emailer.sendMessage(this.user);
+  //     await setDoc(doc(this.usrs), {
+  //       email: this.user.uname,
+  //       pword: this.user.pword,
+  //       isAdmin: false,
+  //       kills: 0,
+  //       name: this.user.name,
+  //       target: null
+  //     });
+  //   } else {
+  //     alert("Sorry, that email or user already exists.");
+  //   }
+  // }
 }

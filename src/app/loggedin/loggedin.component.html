@@ -1,6 +1,10 @@
-<h1>Welcome, {{ user.name }}</h1>
+<p>
+  <strong>Welcome, {{ user.name }}</strong>
+</p>
 
 <p>
   It's good to see you. You have {{ user.kills }} kills. Your target is
   {{ user.target ? user.target : "nobody" }}.
 </p>
+
+<button (click)="click()"></button>

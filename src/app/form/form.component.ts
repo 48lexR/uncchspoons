@@ -1,9 +1,6 @@
-import { Component, Query } from '@angular/core';
-import { Firestore, getFirestore, where, collection, query, getDocs } from '@angular/fire/firestore';
+import { Component} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { environment } from '../../environments/environment';
-import { initializeApp } from '@angular/fire/app';
-import { CollectionReference } from 'firebase/firestore';
+import { FirestoreService } from '../firestore.service';
 
 export interface User{
   uname: string,
@@ -13,10 +10,11 @@ export interface User{
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
+  providers: [FirestoreService],
+
 })
 export class FormComponent {
-  cheese = initializeApp(environment.firebase);
   unamec: FormControl = new FormControl('');
   pwordc: FormControl = new FormControl('');
   namec: FormControl = new FormControl('');
@@ -25,8 +23,6 @@ export class FormComponent {
   pword = "";
   name = "";
   unameMake = "";
-  db: Firestore = getFirestore();
-  usrsRef: CollectionReference = collection(this.db, '/usrs');
   
   usr: any = {
     name : "",
@@ -38,34 +34,16 @@ export class FormComponent {
   };
   userID = "";
   loggedin = false;
-  constructor(public firestore: Firestore){ }
 
-  async onsubmit(){
+  constructor(private db: FirestoreService){ }
+
+  async onSubmit(){
     this.uname = this.unamec.getRawValue();
     this.pword = this.pwordc.getRawValue();
-    console.log(`Uname: ${this.uname}\nPword: ${this.pword}`);
 
-    const usrQ = query(
-      this.usrsRef,
-      where('email', '==', this.uname),
-      where('password', '==', this.pword)
-    );
-
-    await getDocs(usrQ).then((snapshot) => {
-      if(snapshot.docs.length > 0){
-        snapshot.forEach((doc) => {
-          this.usr = doc.data();
-        })
-      } else {
-        this.usr = null;
-      }
-    });
+    let a = await this.db.onSubmit(this.uname, this.pword);
     
-    if(this.usr === null) alert("Yeah, no user by that name.");
-    else {
-      this.loggedin = true;
-    }
+    if(!a) alert("Yeah, no user by that name.");
+    else this.loggedin = true;
   }
-
-
 }
