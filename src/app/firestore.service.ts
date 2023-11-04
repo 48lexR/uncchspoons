@@ -20,12 +20,15 @@ export class FirestoreService {
     }
   }).subscribe((res) => {
     console.log(res);
+    return res;
   });
 }
 
 
   async register(_user: { name: string; uname: string; pword: string; ID: string; target: null; }): Promise<boolean>{
     let a = false;
+
+    //check if user doesn't exist
     await getDocs(query(
       collection(this.db, "/usrs"),
       or(where('name', '==', _user.name),
@@ -36,27 +39,24 @@ export class FirestoreService {
       }
     });
 
-    if(a){
+    if(!a) return false;
 
       //implement sendmessage
 
-      this.sendMessage(_user);
+    this.sendMessage(_user);
 
-      await setDoc(doc(collection(this.db, "/usrs")), {
-        email: _user.uname,
-        pword: _user.pword,
-        isAdmin: false,
-        kills: 0,
-        name: _user.name,
-        target: null
+    await setDoc(doc(collection(this.db, "/usrs")), {
+      email: _user.uname,
+      pword: _user.pword,
+      isAdmin: false,
+      kills: 0,
+      name: _user.name,
+      target: null
       });
 
       return true;
 
-    } else {
-      return false;
     }
-  }
 
   async click(user: { name: string; uname: string; pword: string; kills: number; isAdmin: boolean; target: null; }, date: Date, target: null) {
     await setDoc(doc(collection(this.db, "/kill")), {
@@ -66,7 +66,9 @@ export class FirestoreService {
     })
   }
 
-  async onSubmit(uname: string, pword: string): Promise<boolean> {
+  async onSubmit(uname: any, pword: any): Promise<boolean> {
+    if(typeof uname !== "string") throw new TypeError("uname is not a string!!!");
+    if(typeof pword !== "string") throw new TypeError("pword is not a string!!!");
 
     return await getDocs(query(
       collection(this.db, "usrs"),
@@ -74,6 +76,7 @@ export class FirestoreService {
       where('password', '==', pword)
     ))
     .then((snapshot) => {
+      console.log(snapshot.docs.length);
       if(snapshot.docs.length > 0){
         return true;
       } else {

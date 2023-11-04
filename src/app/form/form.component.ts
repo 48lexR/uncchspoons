@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../firestore.service';
 
 export interface User{
@@ -15,15 +15,16 @@ export interface User{
 
 })
 export class FormComponent {
-  unamec: FormControl = new FormControl('');
-  pwordc: FormControl = new FormControl('');
-  namec: FormControl = new FormControl('');
-  unameMakec: FormControl = new FormControl("");
-  uname = "";
-  pword = "";
-  name = "";
-  unameMake = "";
-  
+  login = new FormGroup({
+    unamec: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        /(.*)@(.*)unc.edu/g
+      )
+    ]),
+    pwordc: new FormControl('', Validators.required)
+  });
+ 
   usr: any = {
     name : "",
     email: "",
@@ -38,10 +39,7 @@ export class FormComponent {
   constructor(private db: FirestoreService){ }
 
   async onSubmit(){
-    this.uname = this.unamec.getRawValue();
-    this.pword = this.pwordc.getRawValue();
-
-    let a = await this.db.onSubmit(this.uname, this.pword);
+    let a = await this.db.onSubmit(this.login.controls['unamec'].getRawValue(), this.login.controls['pwordc'].getRawValue());
     
     if(!a) alert("Yeah, no user by that name.");
     else this.loggedin = true;

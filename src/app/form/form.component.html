@@ -1,12 +1,12 @@
 <div [style.display]="loggedin ? 'none' : 'block'" class="login">
   <p><strong>Log In</strong></p>
   <br />
-  <form action="submit" (ngSubmit)="onSubmit()">
+  <form action="submit" (ngSubmit)="onSubmit()" [formGroup]="login">
     <input
       type="text"
       name="Enter your email"
       id="uname"
-      [formControl]="unamec"
+      formControlName="unamec"
       placeholder="email"
     />
     <br />
@@ -14,7 +14,7 @@
       type="text"
       name="Enter your password"
       id="pword"
-      [formControl]="pwordc"
+      formControlName="pwordc"
       placeholder="password"
     />
     <br />

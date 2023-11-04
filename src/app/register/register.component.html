@@ -1,19 +1,19 @@
 <p><strong>Register new?</strong></p>
 <br />
-<form action="submit" (ngSubmit)="submit()">
+<form action="submit" (ngSubmit)="submit()" [formGroup]="register">
   <input
     type="text"
     name="uname"
     id="unamec"
     placeholder="email"
-    [formControl]="unamec"
+    formControlName="unamec"
   />
   <br />
   <input
     type="text"
     name="name"
     id="name"
-    [formControl]="namec"
+    formControlName="namec"
     placeholder="Firstname Lastname"
   />
   <br />

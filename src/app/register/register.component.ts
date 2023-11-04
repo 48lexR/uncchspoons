@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../firestore.service';
 
 @Component({
@@ -12,8 +12,12 @@ import { FirestoreService } from '../firestore.service';
 
 export class RegisterComponent {
 
-  namec: FormControl = new FormControl("");
-  unamec: FormControl = new FormControl("");
+  register = new FormGroup({
+    namec: new FormControl("", Validators.required),
+    unamec: new FormControl("", [Validators.required, Validators.pattern(
+      /(.*)@(.*)unc.edu/g
+    )])
+  });
   user = {
     name: "",
     uname: "",
@@ -25,10 +29,9 @@ export class RegisterComponent {
   constructor(private fs: FirestoreService) { }
 
   async submit(){
-    this.user.name = this.namec.getRawValue();
-    this.user.uname = this.unamec.getRawValue();
+    this.user.name = String(this.register.controls['namec'].value);
+    this.user.uname = String(this.register.controls['unamec'].value);
     this.user.pword = (Math.random()*256).toString(16);
-    this.user.ID = (Math.random()*256).toString(16);
 
     let a = await this.fs.register(this.user);
 
