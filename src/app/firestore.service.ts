@@ -67,21 +67,7 @@ export class FirestoreService {
       })
       .subscribe({
         next : async v => {
-          console.log(v);
-          return setDoc(doc(collection(this.db, "/usrs")), {
-            email: _user.uname,
-            pword: _user.pword,
-            isAdmin: false,
-            kills: 0,
-            name: _user.name,
-            target: null
-          }).then(res => {
-            return true;
-          }).catch(err=>{
-            alert(err.message);
-            return false;
-          });
-      
+          console.log(v);      
         }, 
         error : e => {
           alert("Failed to send email: " + e.message);
@@ -89,8 +75,22 @@ export class FirestoreService {
           return false;
         }
       });
-      return false;
-      
+
+      return setDoc(doc(collection(this.db, "/usrs")), {
+        email: _user.uname,
+        pword: _user.pword,
+        isAdmin: false,
+        kills: 0,
+        name: _user.name,
+        target: null
+      })
+      .then(res => {
+        return true;
+      })
+      .catch(err=>{
+        alert(err.message);
+        return false;
+      });      
 
 
     }
