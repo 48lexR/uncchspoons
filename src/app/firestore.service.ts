@@ -120,7 +120,7 @@ export class FirestoreService {
     return await getDocs(query(
       collection(this.db, "usrs"),
       where('email', '==', uname),
-      where('password', '==', pword)
+      where('pword', '==', pword)
     ))
     .then((snapshot) => {
       console.log(snapshot.docs.length);
