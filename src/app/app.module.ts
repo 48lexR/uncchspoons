@@ -13,8 +13,6 @@ import { InfoComponent } from './info/info.component';
 import { FirestoreService } from './firestore.service';
 import { HttpClientModule } from '@angular/common/http';
 
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [

@@ -18,7 +18,8 @@ export class RegisterComponent {
     ]),
     unamec: new FormControl("", [Validators.required, Validators.pattern(
       new RegExp("(.*)@(.*)unc.edu")
-    )])
+    )
+  ])
   });
   user = {
     name: "",
@@ -47,35 +48,7 @@ export class RegisterComponent {
 
     let a = await this.fs.register(this.user);
 
-    if(a) alert("An email has been sent to your account");
+    if(a) alert(`If an email, ${this.user.uname} exists, then an email has been sent.`);
     else alert("Sorry, your request to register could not be completed.")
   }
-    //make sure this user DOESN'T already exist
-
-
-  //   let a = false;
-  //   await getDocs(query(
-  //     this.usrs,
-  //     or(where('name', '==', this.user.name),
-  //     where('email', '==', this.user.uname))
-  //   )).then((snapshot) => {
-  //     if(snapshot.docs.length === 0){
-  //       a = true;
-  //     }
-  //   });
-
-  //   if(a){
-  //     this.emailer.sendMessage(this.user);
-  //     await setDoc(doc(this.usrs), {
-  //       email: this.user.uname,
-  //       pword: this.user.pword,
-  //       isAdmin: false,
-  //       kills: 0,
-  //       name: this.user.name,
-  //       target: null
-  //     });
-  //   } else {
-  //     alert("Sorry, that email or user already exists.");
-  //   }
-  // }
 }

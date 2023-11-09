@@ -12,29 +12,7 @@ export class FirestoreService {
     this.req = req;
   }
 
-  /**
-   * 
-   * @param body The body of an email address as a JSON file
-   * @returns an Observable which can be subscribed
-   */
-  // sendMessage(body: any): boolean{
-  //   console.log(body);
-  //   this.req.post('http://uncchspoons.net/email', JSON.parse(JSON.stringify(body)), {
-  //     headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  //   }).subscribe({
-  //     next : v => {
-  //       console.log(v);
-  //     }, 
-  //     error : e => {
-  //       alert(e.message)
-  //       console.log(e);
-  //       return false;
-  //     }
-  //   });
-  //   return true;
-  //   }
+
 
 /**
  * 
