@@ -91,6 +91,7 @@ export class FirestoreService {
           return false;
         }
       });
+      return false;
 
     }
 
