@@ -77,6 +77,7 @@ export class FirestoreService {
             target: null
           })
           .then(res => {
+            console.log(res);
             return true;
           })
           .catch(err=>{
