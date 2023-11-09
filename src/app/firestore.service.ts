@@ -76,7 +76,7 @@ export class FirestoreService {
         }
       });
 
-      return setDoc(doc(collection(this.db, "/usrs")), {
+      return await setDoc(doc(collection(this.db, "/usrs")), {
         email: _user.uname,
         pword: _user.pword,
         isAdmin: false,
@@ -90,9 +90,7 @@ export class FirestoreService {
       .catch(err=>{
         alert(err.message);
         return false;
-      });      
-
-
+      });
     }
 
 /**
@@ -118,7 +116,7 @@ export class FirestoreService {
   async onSubmit(uname: any, pword: any): Promise<boolean> {
     if(typeof uname !== "string") throw new TypeError("uname is not a string!!!");
     if(typeof pword !== "string") throw new TypeError("pword is not a string!!!");
-
+    console.log(`${uname}, ${pword}`);
     return await getDocs(query(
       collection(this.db, "usrs"),
       where('email', '==', uname),
