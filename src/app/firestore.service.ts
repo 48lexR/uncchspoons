@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, getDocs, query, or, where, setDoc, doc } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -57,9 +56,7 @@ export class FirestoreService {
     });
 
     if(!a) return false;
-    a=true;
-      //implement sendmessage
-
+    //otherwise a is true...
     this.req.post('http://uncchspoons.net/email', JSON.parse(JSON.stringify(_user)), {
         headers: {
         'Content-Type': 'application/json'
@@ -68,7 +65,7 @@ export class FirestoreService {
       .subscribe({
         next : async v => {
           console.log(v);   
-          return await setDoc(doc(collection(this.db, "/usrs")), {
+          await setDoc(doc(collection(this.db, "/usrs")), {
             email: _user.uname,
             pword: _user.pword,
             isAdmin: false,
@@ -78,21 +75,21 @@ export class FirestoreService {
           })
           .then(res => {
             console.log(res);
-            return true;
+            a= true;
           })
           .catch(err=>{
             alert(err.message);
-            return false;
+            a= false;
           });
        
         }, 
         error : e => {
           alert("Failed to send email: " + e.message);
           console.log(e);
-          return false;
+          a= false;
         }
       });
-      return false;
+      return a;
 
     }
 
