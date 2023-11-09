@@ -22,6 +22,19 @@ export class FirestoreService {
   async register(_user: { name: string; uname: string; pword: string; ID: string; target: null; }): Promise<boolean>{
     let a = false;
 
+    //test email
+    await fetch('https://emailvalidation.abstractapi.com/v1?api_key=0612253d99d14ad9aeebca3ed93c69b0&email=this.user.uname', {method: "GET"})
+    .then(response => response.json())
+      .then(response => {
+        if(!response.is_smtp_valid) {
+          alert("Email does not exist! Breaking...");
+          throw new Error("Email does not exist");
+        };
+      })
+      .catch(err => {
+        alert(err.message);
+      });
+
     //check if user doesn't exist
     await getDocs(query(
       collection(this.db, "/usrs"),
