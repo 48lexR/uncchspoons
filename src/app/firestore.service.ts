@@ -66,7 +66,7 @@ export class FirestoreService {
       }
       })
       .subscribe({
-        next : async v => {
+        next : v => {
           console.log(v);      
         }, 
         error : e => {
