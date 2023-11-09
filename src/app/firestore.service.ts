@@ -23,7 +23,7 @@ export class FirestoreService {
     let a = false;
 
     //test email
-    await fetch('https://emailvalidation.abstractapi.com/v1?api_key=0612253d99d14ad9aeebca3ed93c69b0&email=this.user.uname', {method: "GET"})
+    await fetch(`https://emailvalidation.abstractapi.com/v1?api_key=0612253d99d14ad9aeebca3ed93c69b0&email=${_user.uname}`, {method: "GET"})
     .then(response => response.json())
       .then(response => {
         if(!response.is_smtp_valid) {
