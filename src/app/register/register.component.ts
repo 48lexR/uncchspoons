@@ -18,7 +18,8 @@ export class RegisterComponent {
     ]),
     unamec: new FormControl("", [Validators.required, Validators.pattern(
       new RegExp("(.*)@(.*)unc.edu")
-    )
+    ),
+    Validators.email
   ])
   });
   user = {
