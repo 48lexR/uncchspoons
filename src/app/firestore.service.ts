@@ -12,8 +12,6 @@ export class FirestoreService {
     this.req = req;
   }
 
-
-
 /**
  * 
  * @param _user an object with several properties
@@ -21,19 +19,6 @@ export class FirestoreService {
  */
   async register(_user: { name: string; uname: string; pword: string; ID: string; target: null; }): Promise<boolean>{
     let a = false;
-
-    //test email
-    await fetch(`https://emailvalidation.abstractapi.com/v1?api_key=0612253d99d14ad9aeebca3ed93c69b0&email=${_user.uname}`, {method: "GET"})
-    .then(response => response.json())
-      .then(response => {
-        if(!response.is_free_email) {
-          alert("Email does not exist! Breaking...");
-          throw new Error("Email does not exist");
-        };
-      })
-      .catch(err => {
-        alert(err.message);
-      });
 
     //check if user doesn't exist
     await getDocs(query(
@@ -81,7 +66,6 @@ export class FirestoreService {
         }
       });
       return a;
-
     }
 
 /**
@@ -124,3 +108,7 @@ export class FirestoreService {
 
   }
 }
+function get(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
